@@ -4,8 +4,12 @@ public class ReadFiles {
         // System.out.println(student.getMark());
         String[] read = FileService.read("C:\\Users\\Lenovo\\IdeaProjects\\Homework_lesson8\\src\\Students.txt");
         Students[] students = new Students[read.length];
+        Students[] students1 = new Students[read.length];
+        Students[] students2 = new Students[read.length];
         for (int i = 0; i < read.length; i++) {
             students[i] = new Students(read[i]);
+            students1[i] = new Students(read[i]);
+            students2[i] = new Students(read[i]);
         }
 
 
@@ -36,32 +40,34 @@ public class ReadFiles {
         String minMarkS;
         int index_min = 0;
         for (int i = 0; i < students.length - 1; i++) {
-            if (students[i].getMark() > students[i + 1].getMark()) {
-                students[i] = students[i + 1];
+            if (students1[i].getMark() > students1[i + 1].getMark()) {
+                students1[i] = students1[i + 1];
                 index_min = i;
             }
 
         }
-        students[index_min].printInfo();
+        students1[index_min].printInfo();
 
         System.out.println("Task 5: Print biggest male student information:");
+
         int indexBig = 0;
         for (int i = 0; i < students.length - 1; i++) {
-            if (students[i].getGender() == 'm' && students[i].getYear() < students[i + 1].getYear()) {
-             //   students[i] = students[i + 1];
-                indexBig = i;
+            if (students2[i].getGender() == 'm' && students2[i].getYear() > students2[i + 1].getYear()) {
+                students2[indexBig] = students2[i];
+                students2[i + 1] = students2[i];
+
             }
         }
-        students[indexBig].printInfo();
+        students2[indexBig].printInfo();
 
         System.out.println("Task 6: Print students sorted by mark:");
-
-        for (int i = students.length - 1; i > 0; i--) {
+        int temp = 0;
+        for (int i = students.length - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (students[j].getMark() > students[j + 1].getMark()) {
-                    int temp = j;
+                    students[temp] = students[j];
                     students[j] = students[j + 1];
-                    students[j + 1] = students[temp];
+
                 }
             }
         }
@@ -71,13 +77,14 @@ public class ReadFiles {
 
         System.out.println("Task 7: Print female students sorted by year:");
         int index_bigF = 0;
-        for (int i = 0; i < students.length; i++) {
-            if(students[i].getGender() == 'f' &&(students[i].getYear() > students[i+1].getYear())){
-                    students[i] = students[i+1];
-                    index_bigF = i;
-            }students[index_bigF].printInfo();
-        }System.out.println(students[index_bigF].getFirstName() + " " + students[index_bigF].getLastName());
-
+        for (int i = 0; i < students.length - 1; i++) {
+            if (students[i].getGender() == 'f' && (students[i].getYear() > students[i + 1].getYear())) {
+                students[i] = students[i + 1];
+                index_bigF = i;
+            }
+        }
+        System.out.println(students[index_bigF].getFirstName() + " " + students[index_bigF].getLastName());
+        students[index_bigF].printInfo();
 
 
     }
